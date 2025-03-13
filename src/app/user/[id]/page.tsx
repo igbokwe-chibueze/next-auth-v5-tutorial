@@ -10,7 +10,7 @@ interface PageProps {
 const getUser = cache(async (id: string) => {
   return prisma.user.findUnique({
     where: { id },
-    select: { id: true, name: true, image: true, createdAt: true },
+    select: { id: true, name: true, email: true, image: true, createdAt: true, role: true },
   });
 });
 
@@ -50,6 +50,14 @@ export default async function Page({ params: { id } }: PageProps) {
       <h1 className="text-center text-xl font-bold">
         {user?.name || `User ${id}`}
       </h1>
+
+      <p className="text-muted-foreground">
+        {user?.email || `User ${id} email`}
+      </p>
+      <p className="text-muted-foreground">
+        {user?.role || ""}
+      </p>
+
       <p className="text-muted-foreground">
         User since {new Date(user.createdAt).toLocaleDateString()}
       </p>
